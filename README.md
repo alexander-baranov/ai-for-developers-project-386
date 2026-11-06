@@ -10,20 +10,30 @@
 
 ## Стек
 
-- Разное
+- Backend: Deno + `Deno.serve`, SQLite (`jsr:@db/sqlite`), порт 7999
+- Frontend: Preact + Vite + TS, порт 8000, прокси `/api → http://localhost:7999`
 
-## Установка
-
-<!-- Опишите установку: клонирование, зависимости, переменные окружения -->
+## Установка (без Node, только Deno)
 
 ```bash
 git clone https://github.com/alexander-baranov/ai-for-developers-project-386.git
 cd ai-for-developers-project-386
+# если сеть через прокси:
+export HTTP_PROXY=http://127.0.0.1:3067 HTTPS_PROXY=http://127.0.0.1:3067 NO_PROXY=localhost,127.0.0.1
 ```
 
 ## Использование
 
-<!-- Добавьте примеры запуска и запись asciinema — именно это смотрит работодатель -->
+```bash
+# бэк (порт 7999)
+cd backend && deno task start
+
+# фронт (порт 8000, Vite через Deno)
+cd frontend && deno task dev
+```
+
+API: `GET/POST /api/meeting-types`, `DELETE /api/meeting-types/:id`, `GET/POST /api/slots?from=&to=`, `DELETE /api/slots/:id`.
+`start_at` — UTC ISO. Окно 09:00–18:00 UTC, шаг 15 мин, длительность `HH:MM` кратна 15 мин. 400 — валидация, 409 — пересечение.
 
 ---
 
